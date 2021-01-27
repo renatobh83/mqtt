@@ -14,9 +14,7 @@ function Temperatura() {
     const [refreshInterval, setRefreshInterval] = useState(300000 || 0);
 
     const fetchTemp = async () => {
-        console.log('LOad fetch');
         const res = await getTemperatura();
-
         if (res.status === 200) {
             setTemperaturaDados(res.data.temperatura);
             setLabel(res.data.periodo);
