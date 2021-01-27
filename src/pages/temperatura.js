@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import LineChart from '../components/LineChart';
 import { getTemperatura } from '../services/API';
-import SliderChart from './slider';
+import SliderChart from '../components/slider';
+import moment from 'moment';
 
 function Temperatura() {
     const [temperaturaDados, setTemperaturaDados] = useState([]);
@@ -10,8 +11,10 @@ function Temperatura() {
     const [limitTemperatura, setLimit] = useState(5);
     const [max, setMax] = useState(null);
     const [min, setMin] = useState(null);
+    const [refreshInterval, setRefreshInterval] = useState(300000 || 0);
 
     const fetchTemp = async () => {
+        console.log('LOad fetch');
         const res = await getTemperatura();
 
         if (res.status === 200) {
@@ -19,6 +22,7 @@ function Temperatura() {
             setLabel(res.data.periodo);
             setMax(res.data.max);
             setMin(res.data.min);
+            setI(true);
         }
     };
 
@@ -31,6 +35,13 @@ function Temperatura() {
         setI(true);
     };
 
+    useEffect(() => {
+        if (refreshInterval && refreshInterval > 0) {
+            const interval = setInterval(fetchTemp, refreshInterval);
+            return () => clearInterval(interval);
+        } else {
+        }
+    }, [refreshInterval]);
     useEffect(() => {
         fetchTemp();
     }, []);
@@ -49,12 +60,12 @@ function Temperatura() {
                         <>
                             <div class="flex">
                                 Maxima : <span>{max.DHT11.Temperature}</span> -{' '}
-                                {max.Time}
+                                {moment(max.Time).format('DD/MM/YYYY HH:mm')}
                             </div>
 
                             <div class="flex">
                                 Minima : <span>{min.DHT11.Temperature}</span> -{' '}
-                                {min.Time}
+                                {moment(min.Time).format('DD/MM/YYYY HH:mm')}
                             </div>
                         </>
                     )}
