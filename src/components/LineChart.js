@@ -4,8 +4,6 @@ import Chart from 'chart.js';
 function LineChart(props) {
     const chartRef = useRef(null);
     const { data, labels, update, set } = props;
-
-    useEffect(() => {}, []);
     useEffect(() => {
         const myCharRef = chartRef.current.getContext('2d');
 

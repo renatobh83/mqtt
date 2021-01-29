@@ -43,3 +43,14 @@ button {
 .container {
     margin-bottom: 35px;
 }
+.container .atualizacao {
+    display: flex;
+    justify-content: flex-end;
+}
+.container .atualizacao select {
+    margin: 0 6 px;
+}
+.container .atualizacao span {
+    display: flex;
+    align-items: center;
+}
